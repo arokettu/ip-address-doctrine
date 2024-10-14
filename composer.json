@@ -1,0 +1,17 @@
+{
+    "name": "arokettu/ip-address-doctrine",
+    "description": "Doctrine support for arokettu/ip-address",
+    "type": "library",
+    "config": {
+        "sort-packages": true
+    },
+    "require": {
+        "php": "^8.2",
+        "arokettu/ip-address": "^2.0",
+        "doctrine/dbal": "^4.2",
+        "psy/psysh": "*"
+    },
+    "require-dev": {
+        "doctrine/orm": "^3.3"
+    }
+}
