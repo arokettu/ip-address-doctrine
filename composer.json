@@ -3,6 +3,9 @@
     "description": "Doctrine support for arokettu/ip-address",
     "type": "library",
     "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        },
         "sort-packages": true
     },
     "require": {
@@ -12,6 +15,8 @@
         "psy/psysh": "*"
     },
     "require-dev": {
-        "doctrine/orm": "^3.3"
+        "doctrine/orm": "^3.3",
+        "sandfox.dev/code-standard": "^1.2024.07.20",
+        "squizlabs/php_codesniffer": "*"
     }
 }
