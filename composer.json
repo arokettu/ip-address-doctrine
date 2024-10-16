@@ -8,9 +8,15 @@
         },
         "sort-packages": true
     },
+    "autoload": {
+        "psr-4": {
+            "Arokettu\\IP\\Doctrine\\": "src"
+        }
+    },
     "require": {
         "php": "^8.2",
         "arokettu/ip-address": "^2.0",
+        "arokettu/is-resource": "^1.0",
         "doctrine/dbal": "^4.2",
         "psy/psysh": "*"
     },
