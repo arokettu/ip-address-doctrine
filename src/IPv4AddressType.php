@@ -13,6 +13,7 @@ use InvalidArgumentException;
 final class IPv4AddressType extends AbstractType
 {
     public const NAME = 'arokettu_ipv4';
+
     protected const CLASS_TITLE = 'IPv4Address';
     protected const BASE_CLASSES = [
         IPv4Address::class,

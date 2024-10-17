@@ -13,6 +13,7 @@ use InvalidArgumentException;
 final class IPv6AddressType extends AbstractType
 {
     public const NAME = 'arokettu_ipv6';
+
     protected const CLASS_TITLE = 'IPv6Address';
     protected const BASE_CLASSES = [
         IPv6Address::class,

@@ -21,6 +21,7 @@ use function Arokettu\IsResource\try_get_resource_type;
 abstract class AbstractType extends Type
 {
     public const NAME = '';
+
     protected const CLASS_TITLE = '';
     protected const BASE_CLASSES = [];
     protected const LENGTH = 0;

@@ -15,6 +15,7 @@ use InvalidArgumentException;
 final class IPAddressType extends AbstractType
 {
     public const NAME = 'arokettu_ip';
+
     protected const CLASS_TITLE = 'IPAddress';
     protected const BASE_CLASSES = [
         IPv4Address::class,
