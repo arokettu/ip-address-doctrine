@@ -9,7 +9,6 @@ use Arokettu\IP\AnyIPBlock;
 use Arokettu\IP\IPv4Address;
 use Doctrine\DBAL\ParameterType;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
-use InvalidArgumentException;
 
 final class IPv4AddressBinaryType extends AbstractType
 {
@@ -27,7 +26,7 @@ final class IPv4AddressBinaryType extends AbstractType
             return $address->getBytes();
         }
 
-        throw new InvalidArgumentException();
+        $this->throwInvalidArgumentException($address);
     }
 
     protected function dbStringToAddress(string $address): AnyIPAddress|AnyIPBlock

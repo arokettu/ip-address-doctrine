@@ -10,7 +10,6 @@ use Arokettu\IP\IPAddress;
 use Arokettu\IP\IPv4Address;
 use Arokettu\IP\IPv6Address;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
-use InvalidArgumentException;
 
 final class IPAddressType extends AbstractType
 {
@@ -29,7 +28,7 @@ final class IPAddressType extends AbstractType
             return $address->toString();
         }
 
-        throw new InvalidArgumentException();
+        $this->throwInvalidArgumentException($address);
     }
 
     protected function dbStringToAddress(string $address): AnyIPAddress|AnyIPBlock

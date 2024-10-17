@@ -84,4 +84,13 @@ abstract class AbstractType extends Type
 
         throw InvalidType::new($value, static::NAME, ['null', 'string', ...static::BASE_CLASSES]);
     }
+
+    protected function throwInvalidArgumentException(mixed $address): never
+    {
+        throw new InvalidArgumentException(sprintf(
+            'Unsupported type %s. %s expected',
+            get_debug_type($address),
+            implode(', ', static::BASE_CLASSES)
+        ));
+    }
 }
