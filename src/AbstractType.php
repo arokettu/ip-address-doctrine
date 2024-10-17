@@ -11,6 +11,7 @@ use Doctrine\DBAL\Types\Exception\InvalidType;
 use Doctrine\DBAL\Types\Exception\SerializationFailed;
 use Doctrine\DBAL\Types\Exception\ValueNotConvertible;
 use Doctrine\DBAL\Types\Type;
+use InvalidArgumentException;
 use Stringable;
 use TypeError;
 use UnexpectedValueException;
@@ -25,14 +26,20 @@ abstract class AbstractType extends Type
     protected const LENGTH = 0;
     protected const LENGTH_VARIABLE = false;
 
-    abstract protected function addressToDbString(AnyIPAddress|AnyIPBlock $uuid): string;
+    abstract protected function addressToDbString(AnyIPAddress|AnyIPBlock $address): string;
     abstract protected function dbStringToAddress(string $address): AnyIPAddress|AnyIPBlock;
-    abstract protected function externalStringToAddress(string $uuid): AnyIPAddress|AnyIPBlock;
+    abstract protected function externalStringToAddress(string $address): AnyIPAddress|AnyIPBlock;
 
     public function convertToPHPValue(mixed $value, AbstractPlatform $platform): AnyIPAddress|AnyIPBlock|null
     {
-        if ($value === null || is_a($value, static::BASE_CLASS)) {
+        if ($value === null) {
             return $value;
+        }
+
+        foreach (self::BASE_CLASSES as $class) {
+            if (\is_a($value, $class)) {
+                return $value;
+            }
         }
 
         if (try_get_resource_type($value) === 'stream') {
@@ -42,7 +49,7 @@ abstract class AbstractType extends Type
 
         try {
             return $this->dbStringToAddress((string)$value);
-        } catch (TypeError | UnexpectedValueException) {
+        } catch (TypeError | UnexpectedValueException | InvalidArgumentException) {
             throw ValueNotConvertible::new(
                 $value,
                 static::NAME,
