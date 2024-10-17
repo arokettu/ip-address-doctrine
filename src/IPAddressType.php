@@ -44,6 +44,7 @@ final class IPAddressType extends AbstractType
     public function getSQLDeclaration(array $column, AbstractPlatform $platform): string
     {
         $column['length'] = self::LENGTH;
+        $column['fixed'] = false;
         return $platform->getStringTypeDeclarationSQL($column);
     }
 }
