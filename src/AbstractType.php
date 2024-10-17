@@ -24,7 +24,6 @@ abstract class AbstractType extends Type
     protected const CLASS_TITLE = '';
     protected const BASE_CLASSES = [];
     protected const LENGTH = 0;
-    protected const LENGTH_VARIABLE = false;
 
     abstract protected function addressToDbString(AnyIPAddress|AnyIPBlock $address): string;
     abstract protected function dbStringToAddress(string $address): AnyIPAddress|AnyIPBlock;

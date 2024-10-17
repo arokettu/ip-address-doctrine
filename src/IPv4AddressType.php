@@ -12,9 +12,12 @@ use InvalidArgumentException;
 
 final class IPv4AddressType extends AbstractType
 {
+    public const NAME = 'arokettu_ipv4';
+    protected const CLASS_TITLE = 'IPv4Address';
     protected const BASE_CLASSES = [
         IPv4Address::class,
     ];
+    protected const LENGTH = Values::IPV4_LENGTH;
 
     protected function addressToDbString(AnyIPBlock|AnyIPAddress $address): string
     {
@@ -37,7 +40,7 @@ final class IPv4AddressType extends AbstractType
 
     public function getSQLDeclaration(array $column, AbstractPlatform $platform): string
     {
-        $column['length'] = Values::IPV4_LENGTH;
+        $column['length'] = self::LENGTH;
         return $platform->getStringTypeDeclarationSQL($column);
     }
 }
