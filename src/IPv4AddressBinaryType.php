@@ -15,7 +15,7 @@ final class IPv4AddressBinaryType extends AbstractType
 {
     public const NAME = 'arokettu_ipv4_bin';
 
-    protected const CLASS_TITLE = 'IPAddress';
+    protected const CLASS_TITLE = 'IPv4Address';
     protected const BASE_CLASSES = [
         IPv4Address::class,
     ];

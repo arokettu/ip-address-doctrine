@@ -6,26 +6,24 @@ namespace Arokettu\IP\Doctrine;
 
 use Arokettu\IP\AnyIPAddress;
 use Arokettu\IP\AnyIPBlock;
-use Arokettu\IP\IPv4Address;
-use Arokettu\IP\IPv6Address;
-use Doctrine\DBAL\ParameterType;
+use Arokettu\IP\IPv6Block;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use InvalidArgumentException;
 
-final class IPv6AddressBinaryType extends AbstractType
+final class IPv6BlockType extends AbstractType
 {
-    public const NAME = 'arokettu_ipv6_bin';
+    public const NAME = 'arokettu_ipv6_cidr';
 
-    protected const CLASS_TITLE = 'IPv6Address';
+    protected const CLASS_TITLE = 'IPv6Block';
     protected const BASE_CLASSES = [
-        IPv4Address::class,
+        IPv6Block::class,
     ];
-    protected const LENGTH = Values::IPV6_BYTES;
+    protected const LENGTH = Values::IPV6_CIDR_LENGTH;
 
     protected function addressToDbString(AnyIPBlock|AnyIPAddress $address): string
     {
-        if ($address instanceof IPv6Address) {
-            return $address->getBytes();
+        if ($address instanceof IPv6Block) {
+            return $address->toString();
         }
 
         throw new InvalidArgumentException();
@@ -33,23 +31,17 @@ final class IPv6AddressBinaryType extends AbstractType
 
     protected function dbStringToAddress(string $address): AnyIPAddress|AnyIPBlock
     {
-        return IPv6Address::fromBytes($address);
+        return IPv6Block::fromString($address, strict: true); // do not read garbage from the database
     }
 
     protected function externalStringToAddress(string $address): AnyIPAddress|AnyIPBlock
     {
-        return IPv6Address::fromBytes($address);
+        return IPv6Block::fromString($address); // lax
     }
 
     public function getSQLDeclaration(array $column, AbstractPlatform $platform): string
     {
         $column['length'] = self::LENGTH;
-        $column['fixed'] = true;
-        return $platform->getBinaryTypeDeclarationSQL($column);
-    }
-
-    public function getBindingType(): ParameterType
-    {
-        return ParameterType::BINARY;
+        return $platform->getStringTypeDeclarationSQL($column);
     }
 }
