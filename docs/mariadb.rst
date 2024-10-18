@@ -8,6 +8,8 @@ MariaDB
 
 ``\Arokettu\IP\Doctrine\VendorSpecific\MariaDB\Inet4Type``
 
+.. note:: MariaDB doc: https://mariadb.com/kb/en/inet4/
+
 IPv4 address. Plain and simple.
 
 ``inet6``
@@ -15,9 +17,11 @@ IPv4 address. Plain and simple.
 
 ``\Arokettu\IP\Doctrine\VendorSpecific\MariaDB\Inet6Type``
 
+.. note:: MariaDB doc: https://mariadb.com/kb/en/inet6/
+
 IPv6 address.
 If you store IPv4 in MariaDB natively, it will be converted to a mapped IPv6 address.
-This library does not support this.
+This library does not support this behavior.
 To replicate this behavior, do this::
 
     <?php
