@@ -41,9 +41,12 @@ Symfony
     doctrine:
       dbal:
         types:
-          !php/const Arokettu\IP\Doctrine\IPv6AddressBinaryType::NAME: Arokettu\IP\Doctrine\IPv6AddressBinaryType
-          !php/const Arokettu\IP\Doctrine\IPv6BlockBinaryType::NAME: Arokettu\IP\Doctrine\IPv6BlockBinaryType
-          !php/const Arokettu\IP\Doctrine\VendorSpecific\MariaDB\Inet6Type::NAME: Arokettu\IP\Doctrine\VendorSpecific\MariaDB\Inet6Type
+          !php/const Arokettu\IP\Doctrine\IPv6AddressBinaryType::NAME:
+            Arokettu\IP\Doctrine\IPv6AddressBinaryType
+          !php/const Arokettu\IP\Doctrine\IPv6BlockBinaryType::NAME:
+            Arokettu\IP\Doctrine\IPv6BlockBinaryType
+          !php/const Arokettu\IP\Doctrine\VendorSpecific\MariaDB\Inet6Type::NAME:
+            Arokettu\IP\Doctrine\VendorSpecific\MariaDB\Inet6Type
         mapping_types:
           inet6: !php/const Arokettu\IP\Doctrine\VendorSpecific\MariaDB\Inet6Type::NAME
 
