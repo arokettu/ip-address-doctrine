@@ -4,7 +4,7 @@
     "type": "library",
     "license": "MIT",
     "keywords": [
-        "ip", "ip address", "ip block", "ip range", "ipv4", "ipv6",
+        "ip", "ip address", "ip block", "ip range", "ipv4", "ipv6", "cidr",
         "doctrine", "mariadb", "postgresql", "postgres"
     ],
     "homepage": "https://sandfox.dev/php/ip-address-doctrine.html",
