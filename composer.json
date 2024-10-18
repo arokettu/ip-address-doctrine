@@ -1,6 +1,10 @@
 {
     "name": "arokettu/ip-address-doctrine",
     "description": "Doctrine support for arokettu/ip-address",
+    "keywords": [
+        "ip", "ip address", "ip block", "ip range", "ipv4", "ipv6",
+        "doctrine", "mariadb", "postgresql", "postgres"
+    ],
     "type": "library",
     "config": {
         "allow-plugins": {
