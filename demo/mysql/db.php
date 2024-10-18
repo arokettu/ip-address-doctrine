@@ -23,7 +23,7 @@ use Doctrine\ORM\Mapping\Driver\AttributeDriver;
 use Doctrine\Persistence\Mapping\Driver\MappingDriverChain;
 
 require __DIR__ . '/../../vendor/autoload.php';
-require __DIR__ . '/model/SqliteIP.php';
+require __DIR__ . '/model/MySqlIP.php';
 
 Type::addType(IPAddressType::NAME, IPAddressType::class);
 Type::addType(IPv4AddressType::NAME, IPv4AddressType::class);
@@ -44,8 +44,12 @@ Type::addType(IPv6BlockBinaryType::NAME, IPv6BlockBinaryType::class);
 $eventManager = new EventManager();
 
 $options = [
-    'driver' => 'pdo_sqlite',
-    'path' => realpath(__DIR__ . '/..') . '/file.sqlite',
+    'driver' => 'pdo_mysql',
+    'host' => '127.0.0.1',
+    'port' => 33061,
+    'user' => 'root',
+    'password' => 'pwd',
+    'dbname' => 'demo',
 ];
 $db = DriverManager::getConnection($options);
 

@@ -7,4 +7,4 @@ services:
       MARIADB_DATABASE: demo
       MARIADB_ROOT_PASSWORD: pwd
     ports:
-      - '3306:3306'
+      - '33062:3306'

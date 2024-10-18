@@ -19,7 +19,7 @@ use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
 
-abstract class BaseIpModel
+abstract class BaseModel
 {
     #[Column, Id, GeneratedValue]
     public int $id;

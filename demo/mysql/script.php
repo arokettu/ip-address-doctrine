@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-use Arokettu\IP\Doctrine\Demo\SqliteIP;
+use Arokettu\IP\Doctrine\Demo\MySqlIP;
 use Arokettu\IP\IPAddress;
 use Arokettu\IP\IPBlock;
 
 ['db' => $db, 'em' => $em] = require __DIR__ . '/db.php';
 
-$ip1 = new SqliteIP();
+$ip1 = new MySqlIP();
 
 $ip1->ip = IPAddress::fromString('127.0.0.1');
 $ip1->ip_bin = IPAddress::fromString('192.168.1.111');
@@ -29,8 +29,8 @@ $em->flush();
 $id1 = $ip1->id;
 $em->detach($ip1);
 
-/** @var SqliteIP $ip1_found */
-$ip1_found = $em->find(SqliteIP::class, $id1);
+/** @var MySqlIP $ip1_found */
+$ip1_found = $em->find(MySqlIP::class, $id1);
 
 var_dump((string)$ip1_found->ip);
 var_dump((string)$ip1_found->ip_bin);
@@ -52,7 +52,7 @@ echo '--------' . PHP_EOL;
 
 // store IPv6 in any ip
 
-$ip2 = new SqliteIP();
+$ip2 = new MySqlIP();
 
 $ip2->ip = IPAddress::fromString('2001:ffff::ffff:abcd');
 $ip2->ip_bin = IPAddress::fromString('2001:ffff::ffff:abcd');
@@ -64,8 +64,8 @@ $em->flush();
 $id2 = $ip2->id;
 $em->detach($ip2);
 
-/** @var SqliteIP $ip2_found */
-$ip2_found = $em->find(SqliteIP::class, $id2);
+/** @var MySqlIP $ip2_found */
+$ip2_found = $em->find(MySqlIP::class, $id2);
 
 var_dump((string)$ip2_found->ip);
 var_dump((string)$ip2_found->ip_bin);
@@ -76,7 +76,7 @@ echo '--------' . PHP_EOL;
 
 // ipv4-like
 
-$ip3 = new SqliteIP();
+$ip3 = new MySqlIP();
 
 $ip3->ip = IPAddress::fromString('::ffff:abcd:ef01');
 
@@ -85,7 +85,7 @@ $em->flush();
 $id3 = $ip3->id;
 $em->detach($ip3);
 
-/** @var SqliteIP $ip3_found */
-$ip3_found = $em->find(SqliteIP::class, $id3);
+/** @var MySqlIP $ip3_found */
+$ip3_found = $em->find(MySqlIP::class, $id3);
 
 var_dump((string)$ip3_found->ip);
