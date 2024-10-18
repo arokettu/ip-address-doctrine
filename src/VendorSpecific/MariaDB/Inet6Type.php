@@ -7,7 +7,6 @@ namespace Arokettu\IP\Doctrine\VendorSpecific\MariaDB;
 use Arokettu\IP\AnyIPAddress;
 use Arokettu\IP\AnyIPBlock;
 use Arokettu\IP\Doctrine\AbstractType;
-use Arokettu\IP\Doctrine\Values;
 use Arokettu\IP\IPv6Address;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 
@@ -20,7 +19,6 @@ final class Inet6Type extends AbstractType
     protected const BASE_CLASSES = [
         IPv6Address::class,
     ];
-    protected const LENGTH = Values::IPV4_LENGTH;
 
     protected function addressToDbString(AnyIPBlock|AnyIPAddress $address): string
     {

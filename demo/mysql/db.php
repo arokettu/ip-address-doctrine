@@ -20,7 +20,6 @@ use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\Configuration;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\Driver\AttributeDriver;
-use Doctrine\Persistence\Mapping\Driver\MappingDriverChain;
 
 require __DIR__ . '/../../vendor/autoload.php';
 require __DIR__ . '/model/MySqlIP.php';

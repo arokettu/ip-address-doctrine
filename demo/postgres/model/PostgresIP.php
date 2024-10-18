@@ -5,10 +5,10 @@ declare(strict_types=1);
 
 namespace Arokettu\IP\Doctrine\Demo;
 
-use Arokettu\IP\Doctrine\VendorSpecific\MariaDB\Inet4Type;
-use Arokettu\IP\Doctrine\VendorSpecific\MariaDB\Inet6Type;
-use Arokettu\IP\IPv4Address;
-use Arokettu\IP\IPv6Address;
+use Arokettu\IP\AnyIPAddress;
+use Arokettu\IP\AnyIPBlock;
+use Arokettu\IP\Doctrine\VendorSpecific\PostgreSQL\CidrType;
+use Arokettu\IP\Doctrine\VendorSpecific\PostgreSQL\InetType;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Table;
@@ -16,11 +16,11 @@ use Doctrine\ORM\Mapping\Table;
 require __DIR__ . '/../../BaseModel.php';
 
 #[Entity, Table(name: 'ip_test')]
-class MariaDbIp extends BaseModel
+class PostgresIP extends BaseModel
 {
-    #[Column(type: Inet4Type::NAME, nullable: true)]
-    public IPv4Address|null $inet4;
+    #[Column(type: InetType::NAME, nullable: true)]
+    public AnyIPAddress|null $inet;
 
-    #[Column(type: Inet6Type::NAME, nullable: true)]
-    public IPv6Address|null $inet6;
+    #[Column(type: CidrType::NAME, nullable: true)]
+    public AnyIPBlock|null $cidr;
 }

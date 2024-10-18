@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-use Arokettu\IP\Doctrine\Demo\MariaDbIp;
+use Arokettu\IP\Doctrine\Demo\PostgresIP;
 use Arokettu\IP\IPAddress;
 use Arokettu\IP\IPBlock;
 
 ['db' => $db, 'em' => $em] = require __DIR__ . '/db.php';
 
-$ip1 = new MariaDbIp();
+$ip1 = new PostgresIP();
 
 $ip1->ip = IPAddress::fromString('127.0.0.1');
 $ip1->ip_bin = IPAddress::fromString('192.168.1.111');
@@ -29,8 +29,8 @@ $em->flush();
 $id1 = $ip1->id;
 $em->detach($ip1);
 
-/** @var MariaDbIp $ip1_found */
-$ip1_found = $em->find(MariaDbIp::class, $id1);
+/** @var PostgresIP $ip1_found */
+$ip1_found = $em->find(PostgresIP::class, $id1);
 
 var_dump((string)$ip1_found->ip);
 var_dump((string)$ip1_found->ip_bin);
@@ -52,7 +52,7 @@ echo '--------' . PHP_EOL;
 
 // store IPv6 in any ip
 
-$ip2 = new MariaDbIp();
+$ip2 = new PostgresIP();
 
 $ip2->ip = IPAddress::fromString('2001:ffff::ffff:abcd');
 $ip2->ip_bin = IPAddress::fromString('2001:ffff::ffff:abcd');
@@ -64,8 +64,8 @@ $em->flush();
 $id2 = $ip2->id;
 $em->detach($ip2);
 
-/** @var MariaDbIp $ip2_found */
-$ip2_found = $em->find(MariaDbIp::class, $id2);
+/** @var PostgresIP $ip2_found */
+$ip2_found = $em->find(PostgresIP::class, $id2);
 
 var_dump((string)$ip2_found->ip);
 var_dump((string)$ip2_found->ip_bin);
@@ -76,7 +76,7 @@ echo '--------' . PHP_EOL;
 
 // ipv4-like
 
-$ip3 = new MariaDbIp();
+$ip3 = new PostgresIP();
 
 $ip3->ip = IPAddress::fromString('::ffff:abcd:ef01');
 
@@ -85,32 +85,80 @@ $em->flush();
 $id3 = $ip3->id;
 $em->detach($ip3);
 
-/** @var MariaDbIp $ip3_found */
-$ip3_found = $em->find(MariaDbIp::class, $id3);
+/** @var PostgresIP $ip3_found */
+$ip3_found = $em->find(PostgresIP::class, $id3);
 
 var_dump((string)$ip3_found->ip);
 
 echo '--------' . PHP_EOL;
 
-// native
+// native v4
 
-$ip4 = new MariaDbIp();
+$ip4 = new PostgresIP();
 
-$ip4->inet4 = IPAddress::fromString('32.58.245.89');
-$ip4->inet6 = IPAddress::fromString('::ffff:32.58.245.89');
+$ip4->inet = IPAddress::fromString('32.58.245.89');
+$ip4->cidr = IPBlock::fromString('32.58.245.89/24');
 
 $em->persist($ip4);
 $em->flush();
 $id4 = $ip4->id;
 $em->detach($ip4);
 
-/** @var MariaDbIp $ip4_found */
-$ip4_found = $em->find(MariaDbIp::class, $id4);
+/** @var PostgresIP $ip4_found */
+$ip4_found = $em->find(PostgresIP::class, $id4);
 
-var_dump((string)$ip4_found->inet4);
-var_dump((string)$ip4_found->inet6);
+var_dump((string)$ip4_found->inet);
+var_dump((string)$ip4_found->cidr);
 
 // also native query
 
-$result = $db->executeQuery('SELECT inet4, inet6 FROM ip_test WHERE id = :id', ['id' => $id4])->fetchAssociative();
+$result = $db->executeQuery('SELECT inet, cidr FROM ip_test WHERE id = :id', ['id' => $id4])->fetchAssociative();
+var_dump($result);
+
+echo '--------' . PHP_EOL;
+
+// native v6
+
+$ip5 = new PostgresIP();
+
+$ip5->inet = IPAddress::fromString('2001:ffff::face:b00c:1');
+$ip5->cidr = IPBlock::fromString('2001:ffff::face:b00c:1/100');
+
+$em->persist($ip5);
+$em->flush();
+$id5 = $ip5->id;
+$em->detach($ip5);
+
+/** @var PostgresIP $ip5_found */
+$ip5_found = $em->find(PostgresIP::class, $id5);
+
+var_dump((string)$ip5_found->inet);
+var_dump((string)$ip5_found->cidr);
+
+// also native query
+
+$result = $db->executeQuery('SELECT inet, cidr FROM ip_test WHERE id = :id', ['id' => $id5])->fetchAssociative();
+var_dump($result);
+
+// native v4 mapped
+
+$ip6 = new PostgresIP();
+
+$ip6->inet = IPAddress::fromString('::ffff:127.0.0.1');
+$ip6->cidr = IPBlock::fromString('::ffff:127.0.0.1/102');
+
+$em->persist($ip6);
+$em->flush();
+$id6 = $ip6->id;
+$em->detach($ip6);
+
+/** @var PostgresIP $ip6_found */
+$ip6_found = $em->find(PostgresIP::class, $id6);
+
+var_dump((string)$ip6_found->inet);
+var_dump((string)$ip6_found->cidr);
+
+// also native query
+
+$result = $db->executeQuery('SELECT inet, cidr FROM ip_test WHERE id = :id', ['id' => $id6])->fetchAssociative();
 var_dump($result);
