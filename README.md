@@ -27,6 +27,50 @@ composer require arokettu/ip-address-doctrine
 
 ## Usage
 
+Available types:
+
+* Any version IP Address in text and binary form
+* IPv4 Address in text and binary form
+* IPv6 Address in text and binary form
+* Any version IP Block in text and binary form
+* IPv4 Block in text and binary form
+* IPv6 Block in text and binary form
+* Native PostgreSQL types: `inet`, `cidr`
+* Native MariaDB types: `inet4`, `inet6`
+
+Example:
+
+```php
+<?php
+
+use Arokettu\IP\AnyIPAddress;
+use Arokettu\IP\Doctrine\IPAddressType;
+use Arokettu\IP\Doctrine\VendorSpecific\PostgreSQL\InetType;
+use Doctrine\DBAL\DriverManager;
+use Doctrine\DBAL\Types\Type;
+use Doctrine\ORM\Mapping\Column;
+
+// first register types you need
+Type::addType(IPAddressType::NAME, IPAddressType::class);
+
+// native type should also be registered in the platform
+Type::addType(InetType::NAME, InetType::class);
+
+$db = DriverManager::getConnection(/* ... */); // when initializing DBAL
+$db->getDatabasePlatform()->registerDoctrineTypeMapping(InetType::NATIVE_TYPE, InetType::NAME);
+
+// apply to the object:
+
+class Model
+{
+    #[Column(type: IPAddressType::NAME)]
+    public AnyIPAddress $ip;
+
+    #[Column(type: InetType::NAME)]
+    public AnyIPAddress $native_ip;
+}
+```
+
 ## Documentation
 
 Read full documentation here: <https://sandfox.dev/php/ip-address-doctrine.html>
