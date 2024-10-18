@@ -9,5 +9,9 @@
 /docs/build
 /venv
 
+# tests
+/reports
+/.phpunit.result.cache
+
 # dev
 /debug
