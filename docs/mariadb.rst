@@ -3,6 +3,8 @@ MariaDB
 
 .. highlight:: php
 
+These types are specific to MariaDB.
+
 ``inet4``
 =========
 

@@ -1,6 +1,8 @@
 PostgreSQL
 ##########
 
+These types are specific to PostgreSQL.
+
 .. note:: PostgreSQL doc: https://www.postgresql.org/docs/current/datatype-net-types.html
 
 ``inet``
