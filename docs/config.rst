@@ -28,7 +28,10 @@ Plain Doctrine
     Type::addType(Inet6Type::NAME, Inet6Type::class);
 
     $db = DriverManager::getConnection(/* ... */); // when initializing DBAL
-    $db->getDatabasePlatform()->registerDoctrineTypeMapping(Inet6Type::NATIVE_TYPE, Inet6Type::NAME);
+    $db->getDatabasePlatform()->registerDoctrineTypeMapping(
+        Inet6Type::NATIVE_TYPE,
+        Inet6Type::NAME,
+    );
 
 Symfony
 =======
