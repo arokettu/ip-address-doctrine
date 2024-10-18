@@ -5,10 +5,10 @@ Configuration
 
 Generally, follow the Doctrine instructions.
 
-.. note:: Doctrine doc: https://www.doctrine-project.org/projects/doctrine-orm/en/3.3/cookbook/custom-mapping-types.html
-
 Plain Doctrine
 ==============
+
+.. note:: Doctrine doc: https://www.doctrine-project.org/projects/doctrine-orm/en/3.3/cookbook/custom-mapping-types.html
 
 ::
 
