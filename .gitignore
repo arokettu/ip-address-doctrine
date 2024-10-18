@@ -5,5 +5,9 @@
 /vendor
 /composer.lock
 
+# docs
+/docs/build
+/venv
+
 # dev
 /debug
