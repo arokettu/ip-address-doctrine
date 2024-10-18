@@ -35,10 +35,10 @@ To replicate this behavior, do this::
     class Model
     {
         #[Column(type: Inet6Type::NAME)]
-        public IPv6Address $ip;
+        public IPv6Address $ip; // only v6 is supported
     }
 
-    $ip = IPAddress::fromString('192.168.0.1');
+    $ip = IPAddress::fromString('192.168.0.1'); // but we have v4
 
     $model = new Model();
     $model = $ip->toMappedIPv6(); // will be stored as ::ffff:192.168.0.1
