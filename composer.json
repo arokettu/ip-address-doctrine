@@ -15,8 +15,8 @@
         "homepage": "https://sandfox.me/"
     }],
     "support": {
-        "issues": "https://gitlab.com/sandfox/ip-address-dcotrine/-/issues",
-        "source": "https://gitlab.com/sandfox/ip-address-dcotrine",
+        "issues": "https://gitlab.com/sandfox/ip-address-doctrine/-/issues",
+        "source": "https://gitlab.com/sandfox/ip-address-doctrine",
         "docs": "https://arokettu-ip-address-doctrine.readthedocs.io/",
         "chat": "https://gitter.im/arokettu/community"
     },
