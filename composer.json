@@ -13,6 +13,11 @@
             "Arokettu\\IP\\Doctrine\\": "src"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Arokettu\\IP\\Doctrine\\Tests\\": "tests"
+        }
+    },
     "require": {
         "php": "^8.2",
         "arokettu/ip-address": "^2.0",
