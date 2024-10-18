@@ -20,6 +20,7 @@ Documentation
 .. toctree::
    :maxdepth: 2
 
+   config
    db_agnostic
    postgresql
    mariadb

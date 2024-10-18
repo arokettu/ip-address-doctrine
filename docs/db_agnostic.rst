@@ -44,8 +44,8 @@ All combinations of the params above exist.
 IPv6 and Varchar
 ================
 
-Please note that there is more than one way to write IPv6 by text.
+Please note that there is more than one way to express a human-readable IPv6.
 For example, mapped IPv4 ``192.168.0.123`` (``0x00000000000000000000ffffc0a8007b``) can be written
 as ``::ffff:192.168.0.123``, as ``::ffff:c0a8:7b``, and as ``0000:0000:0000:0000:0000:ffff:c0a8:007b``.
-Therefore if you need to search for duplicate IPs, especially this library is not the only one that writes to your database,
+Therefore if you need to search for duplicate IPs, especially this library is not the only code that writes to your database,
 binary form should be preferred.
