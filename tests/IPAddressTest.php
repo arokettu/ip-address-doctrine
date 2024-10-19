@@ -11,6 +11,8 @@ use Arokettu\IP\Doctrine\IPv6AddressType;
 use Arokettu\IP\Doctrine\VendorSpecific\MariaDB\Inet4Type;
 use Arokettu\IP\Doctrine\VendorSpecific\MariaDB\Inet6Type;
 use Arokettu\IP\Doctrine\VendorSpecific\PostgreSQL\InetType;
+use Arokettu\IP\IPv4Address;
+use Arokettu\IP\IPv6Address;
 use Doctrine\DBAL\ParameterType;
 use Doctrine\DBAL\Platforms\MariaDBPlatform;
 use Doctrine\DBAL\Platforms\MySQLPlatform;
@@ -83,5 +85,36 @@ class IPAddressTest extends TestCase
         self::assertEquals('inet', $inet->getSQLDeclaration($column, $pg));
         self::assertEquals('inet4', $inet4->getSQLDeclaration($column, $maria));
         self::assertEquals('inet6', $inet6->getSQLDeclaration($column, $maria));
+    }
+
+    public function testValueOut(): void
+    {
+        $platform = new SQLitePlatform();
+
+        $addr = new IPAddressType();
+        $addr4 = new IPv4AddressType();
+        $addr6 = new IPv6AddressType();
+
+        $inet = new InetType();
+        $inet4 = new Inet4Type();
+        $inet6 = new Inet6Type();
+
+        $ipv4db = '162.58.94.238';
+        $ipv6db = '4001:e7f9::45b7:010a'; // see it being normalized
+
+        $ipv4php = IPv4Address::fromString($ipv4db);
+        $ipv6php = IPv6Address::fromString($ipv6db);
+
+        self::assertEquals($ipv4php, $addr->convertToPHPValue($ipv4db, $platform));
+        self::assertEquals($ipv6php, $addr->convertToPHPValue($ipv6db, $platform));
+
+        self::assertEquals($ipv4php, $addr4->convertToPHPValue($ipv4db, $platform));
+        self::assertEquals($ipv6php, $addr6->convertToPHPValue($ipv6db, $platform));
+
+        self::assertEquals($ipv4php, $inet->convertToPHPValue($ipv4db, $platform));
+        self::assertEquals($ipv6php, $inet->convertToPHPValue($ipv6db, $platform));
+
+        self::assertEquals($ipv4php, $inet4->convertToPHPValue($ipv4db, $platform));
+        self::assertEquals($ipv6php, $inet6->convertToPHPValue($ipv6db, $platform));
     }
 }
