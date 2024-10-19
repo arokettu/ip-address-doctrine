@@ -40,7 +40,7 @@ final class IPAddressBinaryType extends AbstractType
 
     protected function externalStringToAddress(string $address): AnyIPAddress|AnyIPBlock
     {
-        return IPAddress::fromBytes($address);
+        return IPAddress::fromString($address);
     }
 
     public function getSQLDeclaration(array $column, AbstractPlatform $platform): string

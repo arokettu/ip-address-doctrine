@@ -36,7 +36,7 @@ final class IPv4AddressBinaryType extends AbstractType
 
     protected function externalStringToAddress(string $address): AnyIPAddress|AnyIPBlock
     {
-        return IPv4Address::fromBytes($address);
+        return IPv4Address::fromString($address);
     }
 
     public function getSQLDeclaration(array $column, AbstractPlatform $platform): string
