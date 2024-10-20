@@ -9,6 +9,8 @@ use Arokettu\IP\Doctrine\IPBlockType;
 use Arokettu\IP\Doctrine\IPv4BlockType;
 use Arokettu\IP\Doctrine\IPv6BlockType;
 use Arokettu\IP\Doctrine\VendorSpecific\PostgreSQL\CidrType;
+use Arokettu\IP\IPv4Block;
+use Arokettu\IP\IPv6Block;
 use Doctrine\DBAL\ParameterType;
 use Doctrine\DBAL\Platforms\MariaDBPlatform;
 use Doctrine\DBAL\Platforms\MySQLPlatform;
@@ -72,5 +74,57 @@ class IPBlockTest extends TestCase
         $column = ['name' => 'test_test'];
 
         self::assertEquals('cidr', $cidr->getSQLDeclaration($column, $pg));
+    }
+
+    public function testValueOut(): void
+    {
+        $platform = new SQLitePlatform();
+
+        $block = new IPBlockType();
+        $block4 = new IPv4BlockType();
+        $block6 = new IPv6BlockType();
+
+        $cidr = new CidrType();
+
+        $ipv4db = '162.58.80.0/20'; // see it being normalized
+        $ipv6db = '4001:e7f9::4000:0/100'; // see it being normalized
+
+        $ipv4php = IPv4Block::fromString($ipv4db);
+        $ipv6php = IPv6Block::fromString($ipv6db);
+
+        self::assertEquals($ipv4php, $block->convertToPHPValue($ipv4db, $platform));
+        self::assertEquals($ipv6php, $block->convertToPHPValue($ipv6db, $platform));
+
+        self::assertEquals($ipv4php, $block4->convertToPHPValue($ipv4db, $platform));
+        self::assertEquals($ipv6php, $block6->convertToPHPValue($ipv6db, $platform));
+
+        self::assertEquals($ipv4php, $cidr->convertToPHPValue($ipv4db, $platform));
+        self::assertEquals($ipv6php, $cidr->convertToPHPValue($ipv6db, $platform));
+    }
+
+    public function testStringIn(): void
+    {
+        $platform = new SQLitePlatform();
+
+        $block = new IPBlockType();
+        $block4 = new IPv4BlockType();
+        $block6 = new IPv6BlockType();
+
+        $cidr = new CidrType();
+
+        $ipv4db = '162.58.80.0/20';
+        $ipv6db = '4001:e7f9::4000:0/100';
+
+        $ipv4in = '162.58.94.238/20'; // see it being normalized
+        $ipv6in = '4001:e7f9::45b7:010a/100'; // see it being normalized
+
+        self::assertEquals($ipv4db, $block->convertToDatabaseValue($ipv4in, $platform));
+        self::assertEquals($ipv6db, $block->convertToDatabaseValue($ipv6in, $platform));
+
+        self::assertEquals($ipv4db, $block4->convertToDatabaseValue($ipv4in, $platform));
+        self::assertEquals($ipv6db, $block6->convertToDatabaseValue($ipv6in, $platform));
+
+        self::assertEquals($ipv4db, $cidr->convertToDatabaseValue($ipv4in, $platform));
+        self::assertEquals($ipv6db, $cidr->convertToDatabaseValue($ipv6in, $platform));
     }
 }

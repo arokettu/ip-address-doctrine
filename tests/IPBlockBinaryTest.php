@@ -92,8 +92,8 @@ class IPBlockBinaryTest extends TestCase
         $block4 = new IPv4BlockBinaryType();
         $block6 = new IPv6BlockBinaryType();
 
-        $ipv4 = '162.58.80.0/20';
-        $ipv6 = '4001:e7f9::4000:0/100';
+        $ipv4 = '162.58.94.238/20'; // see it being normalized
+        $ipv6 = '4001:e7f9::45b7:010a/100'; // see it being normalized
 
         $ipv4bin = hex2bin('a23a500014');
         $ipv6bin = hex2bin('4001e7f900000000000000004000000064');
