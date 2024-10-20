@@ -104,4 +104,25 @@ class IPBlockBinaryTest extends TestCase
         self::assertEquals($ipv4bin, $block4->convertToDatabaseValue($ipv4, $platform));
         self::assertEquals($ipv6bin, $block6->convertToDatabaseValue($ipv6, $platform));
     }
+
+    public function testObjectIn(): void
+    {
+        $platform = new SQLitePlatform();
+
+        $block = new IPBlockBinaryType();
+        $block4 = new IPv4BlockBinaryType();
+        $block6 = new IPv6BlockBinaryType();
+
+        $ipv4 = IPv4Block::fromString('162.58.94.238/20');
+        $ipv6 = IPv6Block::fromString('4001:e7f9::45b7:010a/100');
+
+        $ipv4bin = hex2bin('a23a500014');
+        $ipv6bin = hex2bin('4001e7f900000000000000004000000064');
+
+        self::assertEquals($ipv4bin, $block->convertToDatabaseValue($ipv4, $platform));
+        self::assertEquals($ipv6bin, $block->convertToDatabaseValue($ipv6, $platform));
+
+        self::assertEquals($ipv4bin, $block4->convertToDatabaseValue($ipv4, $platform));
+        self::assertEquals($ipv6bin, $block6->convertToDatabaseValue($ipv6, $platform));
+    }
 }
