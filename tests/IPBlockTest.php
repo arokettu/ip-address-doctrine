@@ -102,6 +102,32 @@ class IPBlockTest extends TestCase
         self::assertEquals($ipv6php, $cidr->convertToPHPValue($ipv6db, $platform));
     }
 
+    public function testObjectOut(): void
+    {
+        $platform = new SQLitePlatform();
+
+        $block = new IPBlockType();
+        $block4 = new IPv4BlockType();
+        $block6 = new IPv6BlockType();
+
+        $cidr = new CidrType();
+
+        $ipv4db = IPv4Block::fromString('162.58.80.0/20');
+        $ipv6db = IPv6Block::fromString('4001:e7f9::4000:0/100');
+
+        $ipv4php = $ipv4db;
+        $ipv6php = $ipv6db;
+
+        self::assertEquals($ipv4php, $block->convertToPHPValue($ipv4db, $platform));
+        self::assertEquals($ipv6php, $block->convertToPHPValue($ipv6db, $platform));
+
+        self::assertEquals($ipv4php, $block4->convertToPHPValue($ipv4db, $platform));
+        self::assertEquals($ipv6php, $block6->convertToPHPValue($ipv6db, $platform));
+
+        self::assertEquals($ipv4php, $cidr->convertToPHPValue($ipv4db, $platform));
+        self::assertEquals($ipv6php, $cidr->convertToPHPValue($ipv6db, $platform));
+    }
+
     public function testStringIn(): void
     {
         $platform = new SQLitePlatform();

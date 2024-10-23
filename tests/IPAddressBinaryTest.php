@@ -155,6 +155,31 @@ class IPAddressBinaryTest extends TestCase
         $addr6->convertToPHPValue($ipv4bin, $platform);
     }
 
+    public function testObjectOut(): void
+    {
+        $platform = new SQLitePlatform();
+
+        $addr = new IPAddressBinaryType();
+        $addr4 = new IPv4AddressBinaryType();
+        $addr6 = new IPv6AddressBinaryType();
+
+        $ipv4 = IPv4Address::fromString('162.58.94.238');
+        $ipv6 = IPv6Address::fromString('4001:e7f9::45b7:010a');
+
+        $ipv4php = $ipv4;
+        $ipv6php = $ipv6;
+
+        $ipv4bin = hex2bin('a23a5eee');
+        $ipv6bin = hex2bin('4001e7f9000000000000000045b7010a');
+
+        self::assertEquals($ipv4php, $addr->convertToPHPValue($ipv4bin, $platform));
+        self::assertEquals($ipv6php, $addr->convertToPHPValue($ipv6bin, $platform));
+
+        self::assertEquals($ipv4php, $addr4->convertToPHPValue($ipv4bin, $platform));
+        self::assertEquals($ipv6php, $addr6->convertToPHPValue($ipv6bin, $platform));
+    }
+
+
     public function testStringIn(): void
     {
         $platform = new SQLitePlatform();

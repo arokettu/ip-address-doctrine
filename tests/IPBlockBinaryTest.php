@@ -169,6 +169,30 @@ class IPBlockBinaryTest extends TestCase
         $block4->convertToPHPValue($ipv4bin, $platform);
     }
 
+    public function testObjectOut(): void
+    {
+        $platform = new SQLitePlatform();
+
+        $block = new IPBlockBinaryType();
+        $block4 = new IPv4BlockBinaryType();
+        $block6 = new IPv6BlockBinaryType();
+
+        $ipv4 = '162.58.80.0/20';
+        $ipv6 = '4001:e7f9::4000:0/100';
+
+        $ipv4php = IPv4Block::fromString($ipv4, strict: true);
+        $ipv6php = IPv6Block::fromString($ipv6, strict: true);
+
+        $ipv4bin = $ipv4php;
+        $ipv6bin = $ipv6php;
+
+        self::assertEquals($ipv4php, $block->convertToPHPValue($ipv4bin, $platform));
+        self::assertEquals($ipv6php, $block->convertToPHPValue($ipv6bin, $platform));
+
+        self::assertEquals($ipv4php, $block4->convertToPHPValue($ipv4bin, $platform));
+        self::assertEquals($ipv6php, $block6->convertToPHPValue($ipv6bin, $platform));
+    }
+
     public function testStringIn(): void
     {
         $platform = new SQLitePlatform();

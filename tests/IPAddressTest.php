@@ -118,6 +118,37 @@ class IPAddressTest extends TestCase
         self::assertEquals($ipv6php, $inet6->convertToPHPValue($ipv6db, $platform));
     }
 
+    public function testObjectOut(): void
+    {
+        $platform = new SQLitePlatform();
+
+        $addr = new IPAddressType();
+        $addr4 = new IPv4AddressType();
+        $addr6 = new IPv6AddressType();
+
+        $inet = new InetType();
+        $inet4 = new Inet4Type();
+        $inet6 = new Inet6Type();
+
+        $ipv4db = IPv4Address::fromString('162.58.94.238');
+        $ipv6db = IPv6Address::fromString('4001:e7f9::45b7:010a');
+
+        $ipv4php = $ipv4db;
+        $ipv6php = $ipv6db;
+
+        self::assertEquals($ipv4php, $addr->convertToPHPValue($ipv4db, $platform));
+        self::assertEquals($ipv6php, $addr->convertToPHPValue($ipv6db, $platform));
+
+        self::assertEquals($ipv4php, $addr4->convertToPHPValue($ipv4db, $platform));
+        self::assertEquals($ipv6php, $addr6->convertToPHPValue($ipv6db, $platform));
+
+        self::assertEquals($ipv4php, $inet->convertToPHPValue($ipv4db, $platform));
+        self::assertEquals($ipv6php, $inet->convertToPHPValue($ipv6db, $platform));
+
+        self::assertEquals($ipv4php, $inet4->convertToPHPValue($ipv4db, $platform));
+        self::assertEquals($ipv6php, $inet6->convertToPHPValue($ipv6db, $platform));
+    }
+
     public function testStringIn(): void
     {
         $platform = new SQLitePlatform();

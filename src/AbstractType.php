@@ -39,9 +39,11 @@ abstract class AbstractType extends Type
             return null;
         }
 
-        foreach (self::BASE_CLASSES as $class) {
-            if (\is_a($value, $class)) {
-                return $value;
+        if (\is_object($value)) {
+            foreach (static::BASE_CLASSES as $class) {
+                if (\is_a($value, $class)) {
+                    return $value;
+                }
             }
         }
 
