@@ -19,6 +19,7 @@ final class IPv4BlockBinaryType extends AbstractType
         IPv4Block::class,
     ];
     protected const LENGTH = Values::IPV4_CIDR_BYTES;
+    protected const BINARY = true;
 
     protected function addressToDbString(AnyIPBlock|AnyIPAddress $address): string
     {

@@ -8,6 +8,7 @@ use Arokettu\IP\Doctrine\AbstractType;
 use Arokettu\IP\Doctrine\IPAddressBinaryType;
 use Arokettu\IP\Doctrine\IPv4AddressBinaryType;
 use Arokettu\IP\Doctrine\IPv6AddressBinaryType;
+use Arokettu\IP\Doctrine\Tests\Helpers\TestHelper;
 use Arokettu\IP\IPv4Address;
 use Arokettu\IP\IPv6Address;
 use Doctrine\DBAL\ParameterType;
@@ -60,7 +61,7 @@ class IPAddressBinaryTest extends TestCase
         }
     }
 
-    public function testValueOut(): void
+    public function testStringOut(): void
     {
         $platform = new SQLitePlatform();
 
@@ -79,6 +80,33 @@ class IPAddressBinaryTest extends TestCase
 
         self::assertEquals($ipv4php, $addr->convertToPHPValue($ipv4bin, $platform));
         self::assertEquals($ipv6php, $addr->convertToPHPValue($ipv6bin, $platform));
+
+        self::assertEquals($ipv4php, $addr4->convertToPHPValue($ipv4bin, $platform));
+        self::assertEquals($ipv6php, $addr6->convertToPHPValue($ipv6bin, $platform));
+    }
+
+    public function testStreamOut(): void
+    {
+        $platform = new SQLitePlatform();
+
+        $addr = new IPAddressBinaryType();
+        $addr4 = new IPv4AddressBinaryType();
+        $addr6 = new IPv6AddressBinaryType();
+
+        $ipv4 = '162.58.94.238';
+        $ipv6 = '4001:e7f9::45b7:010a';
+
+        $ipv4php = IPv4Address::fromString($ipv4);
+        $ipv6php = IPv6Address::fromString($ipv6);
+
+        $ipv4bin = TestHelper::stringToStream(hex2bin('a23a5eee'));
+        $ipv6bin = TestHelper::stringToStream(hex2bin('4001e7f9000000000000000045b7010a'));
+
+        self::assertEquals($ipv4php, $addr->convertToPHPValue($ipv4bin, $platform));
+        self::assertEquals($ipv6php, $addr->convertToPHPValue($ipv6bin, $platform));
+
+        rewind($ipv4bin);
+        rewind($ipv6bin);
 
         self::assertEquals($ipv4php, $addr4->convertToPHPValue($ipv4bin, $platform));
         self::assertEquals($ipv6php, $addr6->convertToPHPValue($ipv6bin, $platform));

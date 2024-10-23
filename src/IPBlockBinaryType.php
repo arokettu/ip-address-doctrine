@@ -22,6 +22,7 @@ final class IPBlockBinaryType extends AbstractType
         IPv6Block::class,
     ];
     protected const LENGTH = Values::IPV6_CIDR_BYTES;
+    protected const BINARY = true;
 
     protected function addressToDbString(AnyIPBlock|AnyIPAddress $address): string
     {

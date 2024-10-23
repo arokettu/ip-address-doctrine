@@ -20,6 +20,7 @@ final class IPv6AddressBinaryType extends AbstractType
         IPv4Address::class,
     ];
     protected const LENGTH = Values::IPV6_BYTES;
+    protected const BINARY = true;
 
     protected function addressToDbString(AnyIPBlock|AnyIPAddress $address): string
     {

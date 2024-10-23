@@ -25,6 +25,7 @@ abstract class AbstractType extends Type
     protected const CLASS_TITLE = '';
     protected const BASE_CLASSES = [];
     protected const LENGTH = 0;
+    protected const BINARY = false;
 
     abstract protected function addressToDbString(AnyIPAddress|AnyIPBlock $address): string;
     abstract protected function dbStringToAddress(string $address): AnyIPAddress|AnyIPBlock;
@@ -49,11 +50,11 @@ abstract class AbstractType extends Type
 
         try {
             return $this->dbStringToAddress((string)$value);
-        } catch (TypeError | UnexpectedValueException | InvalidArgumentException) {
+        } catch (TypeError|UnexpectedValueException|InvalidArgumentException $e) {
             throw ValueNotConvertible::new(
                 $value,
                 static::NAME,
-                sprintf('Not a valid %s representation', static::CLASS_TITLE)
+                $e->getMessage()
             );
         }
     }

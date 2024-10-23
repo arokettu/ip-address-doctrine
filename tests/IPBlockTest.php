@@ -76,7 +76,7 @@ class IPBlockTest extends TestCase
         self::assertEquals('cidr', $cidr->getSQLDeclaration($column, $pg));
     }
 
-    public function testValueOut(): void
+    public function testStringOut(): void
     {
         $platform = new SQLitePlatform();
 

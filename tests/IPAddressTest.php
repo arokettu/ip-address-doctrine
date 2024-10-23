@@ -87,7 +87,7 @@ class IPAddressTest extends TestCase
         self::assertEquals('inet6', $inet6->getSQLDeclaration($column, $maria));
     }
 
-    public function testValueOut(): void
+    public function testStringOut(): void
     {
         $platform = new SQLitePlatform();
 
