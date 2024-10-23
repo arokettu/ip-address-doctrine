@@ -18,6 +18,7 @@ use Doctrine\DBAL\Platforms\OraclePlatform;
 use Doctrine\DBAL\Platforms\PostgreSQLPlatform;
 use Doctrine\DBAL\Platforms\SQLitePlatform;
 use Doctrine\DBAL\Platforms\SQLServerPlatform;
+use Doctrine\DBAL\Types\Exception\ValueNotConvertible;
 use PHPUnit\Framework\TestCase;
 
 class IPAddressBinaryTest extends TestCase
@@ -110,6 +111,48 @@ class IPAddressBinaryTest extends TestCase
 
         self::assertEquals($ipv4php, $addr4->convertToPHPValue($ipv4bin, $platform));
         self::assertEquals($ipv6php, $addr6->convertToPHPValue($ipv6bin, $platform));
+    }
+
+    public function testStreamWrongLength(): void
+    {
+        $platform = new SQLitePlatform();
+        $addr = new IPAddressBinaryType();
+        $ipv4bin = TestHelper::stringToStream(hex2bin('a23a500014'));
+
+        $this->expectException(ValueNotConvertible::class);
+        $this->expectExceptionMessage(
+            'Could not convert database value "0xA23A500014" to Doctrine Type "arokettu_ip_bin".'
+        );
+
+        $addr->convertToPHPValue($ipv4bin, $platform);
+    }
+
+    public function testStreamWrongLength64(): void
+    {
+        $platform = new SQLitePlatform();
+        $addr4 = new IPv4AddressBinaryType();
+        $ipv6bin = TestHelper::stringToStream(hex2bin('4001e7f9000000000000000045b7010a'));
+
+        $this->expectException(ValueNotConvertible::class);
+        $this->expectExceptionMessage(
+            'Could not convert database value "0x4001E7F900" to Doctrine Type "arokettu_ipv4_bin".'
+        );
+
+        $addr4->convertToPHPValue($ipv6bin, $platform);
+    }
+
+    public function testStreamWrongLength46(): void
+    {
+        $platform = new SQLitePlatform();
+        $addr6 = new IPv6AddressBinaryType();
+        $ipv4bin = TestHelper::stringToStream(hex2bin('a23a5eee'));
+
+        $this->expectException(ValueNotConvertible::class);
+        $this->expectExceptionMessage(
+            'Could not convert database value "0xA23A5EEE" to Doctrine Type "arokettu_ipv6_bin".'
+        );
+
+        $addr6->convertToPHPValue($ipv4bin, $platform);
     }
 
     public function testStringIn(): void

@@ -18,6 +18,7 @@ use Doctrine\DBAL\Platforms\OraclePlatform;
 use Doctrine\DBAL\Platforms\PostgreSQLPlatform;
 use Doctrine\DBAL\Platforms\SQLitePlatform;
 use Doctrine\DBAL\Platforms\SQLServerPlatform;
+use Doctrine\DBAL\Types\Exception\ValueNotConvertible;
 use PHPUnit\Framework\TestCase;
 
 class IPBlockBinaryTest extends TestCase
@@ -110,6 +111,62 @@ class IPBlockBinaryTest extends TestCase
 
         self::assertEquals($ipv4php, $block4->convertToPHPValue($ipv4bin, $platform));
         self::assertEquals($ipv6php, $block6->convertToPHPValue($ipv6bin, $platform));
+    }
+
+    public function testStreamWrongLength(): void
+    {
+        $platform = new SQLitePlatform();
+        $block = new IPBlockBinaryType();
+        $ipv4bin = TestHelper::stringToStream(hex2bin('a23a5eee'));
+
+        $this->expectException(ValueNotConvertible::class);
+        $this->expectExceptionMessage(
+            'Could not convert database value "0xA23A5EEE" to Doctrine Type "arokettu_ip_cidr_bin".'
+        );
+
+        $block->convertToPHPValue($ipv4bin, $platform);
+    }
+
+    public function testStreamWrongLength64(): void
+    {
+        $platform = new SQLitePlatform();
+        $block4 = new IPv4BlockBinaryType();
+        $ipv6bin = TestHelper::stringToStream(hex2bin('4001e7f900000000000000004000000064'));
+
+        $this->expectException(ValueNotConvertible::class);
+        $this->expectExceptionMessage(
+            'Could not convert database value "0x4001E7F90000" to Doctrine Type "arokettu_ipv4_cidr_bin".'
+        );
+
+        $block4->convertToPHPValue($ipv6bin, $platform);
+    }
+
+    public function testStreamWrongLength46(): void
+    {
+        $platform = new SQLitePlatform();
+        $block6 = new IPv6BlockBinaryType();
+        $ipv4bin = TestHelper::stringToStream(hex2bin('a23a500014'));
+
+        $this->expectException(ValueNotConvertible::class);
+        $this->expectExceptionMessage(
+            'Could not convert database value "0xA23A500014" to Doctrine Type "arokettu_ipv6_cidr_bin".'
+        );
+
+        $block6->convertToPHPValue($ipv4bin, $platform);
+    }
+
+    public function testStreamWrongPrefix(): void
+    {
+        $platform = new SQLitePlatform();
+        $block4 = new IPv4BlockBinaryType();
+        $ipv4bin = TestHelper::stringToStream(hex2bin('a23a5000ff'));
+
+        $this->expectException(ValueNotConvertible::class);
+        $this->expectExceptionMessage(
+            'Could not convert database value "0xA23A5000FF" to Doctrine Type "arokettu_ipv4_cidr_bin".'
+        );
+
+        $block4->convertToPHPValue($ipv4bin, $platform);
     }
 
     public function testStringIn(): void

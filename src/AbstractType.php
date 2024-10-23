@@ -18,6 +18,8 @@ use UnexpectedValueException;
 
 use function Arokettu\IsResource\try_get_resource_type;
 
+// phpcs:disable PSR12.Operators.OperatorSpacing.NoSpaceBefore
+// phpcs:disable PSR12.Operators.OperatorSpacing.NoSpaceAfter
 abstract class AbstractType extends Type
 {
     public const NAME = '';
@@ -34,7 +36,7 @@ abstract class AbstractType extends Type
     public function convertToPHPValue(mixed $value, AbstractPlatform $platform): AnyIPAddress|AnyIPBlock|null
     {
         if ($value === null) {
-            return $value;
+            return null;
         }
 
         foreach (self::BASE_CLASSES as $class) {
@@ -52,9 +54,10 @@ abstract class AbstractType extends Type
             return $this->dbStringToAddress((string)$value);
         } catch (TypeError|UnexpectedValueException|InvalidArgumentException $e) {
             throw ValueNotConvertible::new(
-                $value,
+                static::BINARY ? '0x' . strtoupper(bin2hex($value)) : $value,
                 static::NAME,
-                $e->getMessage()
+                null,
+                $e
             );
         }
     }
@@ -74,13 +77,8 @@ abstract class AbstractType extends Type
                 $value = $this->externalStringToAddress((string)$value);
                 return $this->addressToDbString($value);
             }
-        } catch (TypeError | UnexpectedValueException $e) {
-            throw SerializationFailed::new(
-                $value,
-                static::NAME,
-                sprintf('Not a valid %s representation', static::CLASS_TITLE),
-                $e
-            );
+        } catch (TypeError|UnexpectedValueException $e) {
+            throw SerializationFailed::new($value, static::NAME, $e->getMessage(), $e);
         }
 
         throw InvalidType::new($value, static::NAME, ['null', 'string', ...static::BASE_CLASSES]);
