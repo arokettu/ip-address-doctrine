@@ -9,6 +9,8 @@ use Arokettu\IP\Doctrine\IPAddressBinaryType;
 use Arokettu\IP\Doctrine\IPv4AddressBinaryType;
 use Arokettu\IP\Doctrine\IPv6AddressBinaryType;
 use Arokettu\IP\Doctrine\Tests\Helpers\TestHelper;
+use Arokettu\IP\IPAddress;
+use Arokettu\IP\IPBlock;
 use Arokettu\IP\IPv4Address;
 use Arokettu\IP\IPv6Address;
 use Doctrine\DBAL\ParameterType;
@@ -18,6 +20,7 @@ use Doctrine\DBAL\Platforms\OraclePlatform;
 use Doctrine\DBAL\Platforms\PostgreSQLPlatform;
 use Doctrine\DBAL\Platforms\SQLitePlatform;
 use Doctrine\DBAL\Platforms\SQLServerPlatform;
+use Doctrine\DBAL\Types\Exception\SerializationFailed;
 use Doctrine\DBAL\Types\Exception\ValueNotConvertible;
 use PHPUnit\Framework\TestCase;
 
@@ -220,5 +223,50 @@ class IPAddressBinaryTest extends TestCase
 
         self::assertEquals($ipv4bin, $addr4->convertToDatabaseValue($ipv4, $platform));
         self::assertEquals($ipv6bin, $addr6->convertToDatabaseValue($ipv6, $platform));
+    }
+
+    public function testObjectInWrongClassIPAddressType(): void
+    {
+        $addr = new IPAddressBinaryType();
+        $platform = new SQLitePlatform();
+
+        $this->expectException(SerializationFailed::class);
+        $this->expectExceptionMessage(
+            'Could not convert PHP type "Arokettu\IP\IPv6Block" to "arokettu_ip_bin". ' .
+            'An error was triggered by the serialization: ' .
+            'Unsupported type Arokettu\IP\IPv6Block. Expected types: Arokettu\IP\IPv4Address, Arokettu\IP\IPv6Address.'
+        );
+
+        $addr->convertToDatabaseValue(IPBlock::fromString('::1', -1), $platform);
+    }
+
+    public function testObjectInWrongClassIPv4AddressType(): void
+    {
+        $addr = new IPv4AddressBinaryType();
+        $platform = new SQLitePlatform();
+
+        $this->expectException(SerializationFailed::class);
+        $this->expectExceptionMessage(
+            'Could not convert PHP type "Arokettu\IP\IPv6Address" to "arokettu_ipv4_bin". ' .
+            'An error was triggered by the serialization: ' .
+            'Unsupported type Arokettu\IP\IPv6Address. Expected types: Arokettu\IP\IPv4Address.'
+        );
+
+        $addr->convertToDatabaseValue(IPAddress::fromString('::1'), $platform);
+    }
+
+    public function testObjectInWrongClassIPv6AddressType(): void
+    {
+        $addr = new IPv6AddressBinaryType();
+        $platform = new SQLitePlatform();
+
+        $this->expectException(SerializationFailed::class);
+        $this->expectExceptionMessage(
+            'Could not convert PHP type "Arokettu\IP\IPv4Address" to "arokettu_ipv6_bin". ' .
+            'An error was triggered by the serialization: ' .
+            'Unsupported type Arokettu\IP\IPv4Address. Expected types: Arokettu\IP\IPv4Address.'
+        );
+
+        $addr->convertToDatabaseValue(IPAddress::fromString('0.0.0.1'), $platform);
     }
 }

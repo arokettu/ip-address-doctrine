@@ -31,7 +31,7 @@ final class IPAddressBinaryType extends AbstractType
             return $address->getBytes();
         }
 
-        throw new InvalidArgumentException();
+        $this->throwInvalidArgumentException($address);
     }
 
     protected function dbStringToAddress(string $address): AnyIPAddress|AnyIPBlock

@@ -79,7 +79,7 @@ abstract class AbstractType extends Type
                 $value = $this->externalStringToAddress((string)$value);
                 return $this->addressToDbString($value);
             }
-        } catch (TypeError|UnexpectedValueException $e) {
+        } catch (TypeError|UnexpectedValueException|InvalidArgumentException $e) {
             throw SerializationFailed::new($value, static::NAME, $e->getMessage(), $e);
         }
 
@@ -89,7 +89,7 @@ abstract class AbstractType extends Type
     protected function throwInvalidArgumentException(mixed $address): never
     {
         throw new InvalidArgumentException(sprintf(
-            'Unsupported type %s. %s expected',
+            'Unsupported type %s. Expected types: %s.',
             get_debug_type($address),
             implode(', ', static::BASE_CLASSES)
         ));

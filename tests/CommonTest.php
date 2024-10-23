@@ -22,7 +22,7 @@ class CommonTest extends TestCase
         self::assertNull($type->convertToPHPValue(null, $platform)); // null out
     }
 
-    public function testWrongClass(): void
+    public function testObjectInWrongClass(): void
     {
         $type = new IPAddressType();
         $platform = new SQLitePlatform();
