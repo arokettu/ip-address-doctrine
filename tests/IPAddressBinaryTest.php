@@ -249,7 +249,7 @@ class IPAddressBinaryTest extends TestCase
         $this->expectExceptionMessage(
             'Could not convert PHP type "Arokettu\IP\IPv6Address" to "arokettu_ipv4_bin". ' .
             'An error was triggered by the serialization: ' .
-            'Unsupported type Arokettu\IP\IPv6Address. Expected types: Arokettu\IP\IPv4Address.'
+            'Unsupported type Arokettu\IP\IPv6Address. Expected type: Arokettu\IP\IPv4Address.'
         );
 
         $addr->convertToDatabaseValue(IPAddress::fromString('::1'), $platform);
@@ -264,7 +264,7 @@ class IPAddressBinaryTest extends TestCase
         $this->expectExceptionMessage(
             'Could not convert PHP type "Arokettu\IP\IPv4Address" to "arokettu_ipv6_bin". ' .
             'An error was triggered by the serialization: ' .
-            'Unsupported type Arokettu\IP\IPv4Address. Expected types: Arokettu\IP\IPv4Address.'
+            'Unsupported type Arokettu\IP\IPv4Address. Expected type: Arokettu\IP\IPv4Address.'
         );
 
         $addr->convertToDatabaseValue(IPAddress::fromString('0.0.0.1'), $platform);
