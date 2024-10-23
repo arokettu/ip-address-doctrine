@@ -2,6 +2,13 @@
 
 ## 1.x
 
+### 1.0.2
+
+*Oct 24, 2024*
+
+* Fixed some error messages
+* Fixed some optimizations not kicking in
+
 ### 1.0.1
 
 *Oct 21, 2024*
