@@ -2,6 +2,12 @@
 
 ## 1.x
 
+### 1.0.3
+
+*Feb 7, 2025*
+
+* Removed psy/psysh from dependencies, it was supposed to be a dev dependency
+
 ### 1.0.2
 
 *Oct 24, 2024*
