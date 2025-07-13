@@ -1,7 +1,7 @@
 IP Address for Doctrine
 #######################
 
-|Packagist| |GitLab| |GitHub| |Bitbucket| |Gitea|
+|Packagist| |GitLab| |GitHub| |Codeberg| |Gitea|
 
 Doctrine support for `arokettu/ip-address`_ with support for native types in MariaDB and PostgreSQL.
 
@@ -38,7 +38,7 @@ The library is available as open source under the terms of the `MIT License`_.
    :target:     https://github.com/arokettu/ip-address-doctrine
 .. |GitLab|     image:: https://img.shields.io/badge/get%20on-GitLab-informational.svg?style=flat-square&logo=gitlab
    :target:     https://gitlab.com/sandfox/ip-address-doctrine
-.. |Bitbucket|  image:: https://img.shields.io/badge/get%20on-Bitbucket-informational.svg?style=flat-square&logo=bitbucket
-   :target:     https://bitbucket.org/sandfox/ip-address-doctrine
+.. |Codeberg|   image:: https://img.shields.io/badge/get%20on-Codeberg-informational.svg?style=flat-square&logo=codeberg
+   :target:     https://codeberg.org/sandfox/ip-address-doctrine
 .. |Gitea|      image:: https://img.shields.io/badge/get%20on-Gitea-informational.svg?style=flat-square&logo=gitea
    :target:     https://sandfox.org/sandfox/ip-address-doctrine
