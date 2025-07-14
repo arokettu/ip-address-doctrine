@@ -41,4 +41,4 @@ To replicate this behavior, do this::
     $ip = IPAddress::fromString('192.168.0.1'); // but we have v4
 
     $model = new Model();
-    $model = $ip->toMappedIPv6(); // will be stored as ::ffff:192.168.0.1
+    $model->ip = $ip->toMappedIPv6(); // will be stored as ::ffff:192.168.0.1
