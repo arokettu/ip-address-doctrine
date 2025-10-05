@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         displayDetailsOnTestsThatTriggerErrors="true"
-         displayDetailsOnTestsThatTriggerNotices="true"
-         displayDetailsOnTestsThatTriggerWarnings="true"
-         displayDetailsOnTestsThatTriggerDeprecations="true"
+         displayDetailsOnAllIssues="true"
+         failOnAllIssues="true"
          executionOrder="random"
          xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/11.5/phpunit.xsd">
     <testsuites>
@@ -16,4 +14,7 @@
             <directory>src</directory>
         </include>
     </source>
+    <php>
+        <ini name="error_reporting" value="E_ALL"/>
+    </php>
 </phpunit>
