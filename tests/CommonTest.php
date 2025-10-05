@@ -11,7 +11,7 @@ use Doctrine\DBAL\Types\Exception\InvalidType;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
-class CommonTest extends TestCase
+final class CommonTest extends TestCase
 {
     public function testNull(): void
     {
@@ -30,7 +30,7 @@ class CommonTest extends TestCase
         $this->expectException(InvalidType::class);
         $this->expectExceptionMessage(
             'Could not convert PHP value of type stdClass to type arokettu_ip. ' .
-            'Expected one of the following types: null, string, Arokettu\IP\IPv4Address, Arokettu\IP\IPv6Address.'
+            'Expected one of the following types: null, string, Arokettu\IP\IPv4Address, Arokettu\IP\IPv6Address.',
         );
 
         // non-ip, non-stringable class

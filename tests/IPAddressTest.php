@@ -25,7 +25,7 @@ use Doctrine\DBAL\Platforms\SQLServerPlatform;
 use Doctrine\DBAL\Types\Exception\SerializationFailed;
 use PHPUnit\Framework\TestCase;
 
-class IPAddressTest extends TestCase
+final class IPAddressTest extends TestCase
 {
     public function testBindingType(): void
     {
@@ -68,7 +68,7 @@ class IPAddressTest extends TestCase
                 self::assertEquals(
                     $query[$id],
                     $type->getSQLDeclaration($column, $platform),
-                    $type::class . ' / ' . $platform::class
+                    $type::class . ' / ' . $platform::class,
                 );
             }
         }
@@ -223,7 +223,7 @@ class IPAddressTest extends TestCase
         $this->expectExceptionMessage(
             'Could not convert PHP type "Arokettu\IP\IPv6Block" to "arokettu_ip". ' .
             'An error was triggered by the serialization: ' .
-            'Unsupported type Arokettu\IP\IPv6Block. Expected types: Arokettu\IP\IPv4Address, Arokettu\IP\IPv6Address.'
+            'Unsupported type Arokettu\IP\IPv6Block. Expected types: Arokettu\IP\IPv4Address, Arokettu\IP\IPv6Address.',
         );
 
         $addr->convertToDatabaseValue(IPBlock::fromString('::1', -1), $platform);
@@ -238,7 +238,7 @@ class IPAddressTest extends TestCase
         $this->expectExceptionMessage(
             'Could not convert PHP type "Arokettu\IP\IPv6Address" to "arokettu_ipv4". ' .
             'An error was triggered by the serialization: ' .
-            'Unsupported type Arokettu\IP\IPv6Address. Expected type: Arokettu\IP\IPv4Address.'
+            'Unsupported type Arokettu\IP\IPv6Address. Expected type: Arokettu\IP\IPv4Address.',
         );
 
         $addr->convertToDatabaseValue(IPAddress::fromString('::1'), $platform);
@@ -253,7 +253,7 @@ class IPAddressTest extends TestCase
         $this->expectExceptionMessage(
             'Could not convert PHP type "Arokettu\IP\IPv4Address" to "arokettu_ipv6". ' .
             'An error was triggered by the serialization: ' .
-            'Unsupported type Arokettu\IP\IPv4Address. Expected type: Arokettu\IP\IPv6Address.'
+            'Unsupported type Arokettu\IP\IPv4Address. Expected type: Arokettu\IP\IPv6Address.',
         );
 
         $addr->convertToDatabaseValue(IPAddress::fromString('0.0.0.1'), $platform);
@@ -268,7 +268,7 @@ class IPAddressTest extends TestCase
         $this->expectExceptionMessage(
             'Could not convert PHP type "Arokettu\IP\IPv6Block" to "arokettu_postgres_inet". ' .
             'An error was triggered by the serialization: ' .
-            'Unsupported type Arokettu\IP\IPv6Block. Expected types: Arokettu\IP\IPv4Address, Arokettu\IP\IPv6Address.'
+            'Unsupported type Arokettu\IP\IPv6Block. Expected types: Arokettu\IP\IPv4Address, Arokettu\IP\IPv6Address.',
         );
 
         $addr->convertToDatabaseValue(IPBlock::fromString('::1', -1), $platform);
@@ -283,7 +283,7 @@ class IPAddressTest extends TestCase
         $this->expectExceptionMessage(
             'Could not convert PHP type "Arokettu\IP\IPv6Address" to "arokettu_mariadb_inet4". ' .
             'An error was triggered by the serialization: ' .
-            'Unsupported type Arokettu\IP\IPv6Address. Expected type: Arokettu\IP\IPv4Address.'
+            'Unsupported type Arokettu\IP\IPv6Address. Expected type: Arokettu\IP\IPv4Address.',
         );
 
         $addr->convertToDatabaseValue(IPAddress::fromString('::1'), $platform);
@@ -298,7 +298,7 @@ class IPAddressTest extends TestCase
         $this->expectExceptionMessage(
             'Could not convert PHP type "Arokettu\IP\IPv4Address" to "arokettu_mariadb_inet6". ' .
             'An error was triggered by the serialization: ' .
-            'Unsupported type Arokettu\IP\IPv4Address. Expected type: Arokettu\IP\IPv6Address.'
+            'Unsupported type Arokettu\IP\IPv4Address. Expected type: Arokettu\IP\IPv6Address.',
         );
 
         $addr->convertToDatabaseValue(IPAddress::fromString('0.0.0.1'), $platform);

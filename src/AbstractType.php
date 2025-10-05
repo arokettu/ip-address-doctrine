@@ -59,7 +59,7 @@ abstract class AbstractType extends Type
                 static::BINARY ? '0x' . strtoupper(bin2hex($value)) : $value,
                 static::NAME,
                 null,
-                $e
+                $e,
             );
         }
     }
@@ -88,11 +88,11 @@ abstract class AbstractType extends Type
 
     protected function throwInvalidArgumentException(mixed $address): never
     {
-        throw new InvalidArgumentException(sprintf(
+        throw new InvalidArgumentException(\sprintf(
             'Unsupported type %s. Expected %s: %s.',
             get_debug_type($address),
             \count(static::BASE_CLASSES) === 1 ? 'type' : 'types',
-            implode(', ', static::BASE_CLASSES)
+            implode(', ', static::BASE_CLASSES),
         ));
     }
 }

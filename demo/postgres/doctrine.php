@@ -12,5 +12,5 @@ $commands = [
 
 ConsoleRunner::run(
     new SingleManagerProvider($em),
-    $commands
+    $commands,
 );

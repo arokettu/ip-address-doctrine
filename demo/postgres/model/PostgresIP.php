@@ -16,7 +16,7 @@ use Doctrine\ORM\Mapping\Table;
 require __DIR__ . '/../../BaseModel.php';
 
 #[Entity, Table(name: 'ip_test')]
-class PostgresIP extends BaseModel
+final class PostgresIP extends BaseModel
 {
     #[Column(type: InetType::NAME, nullable: true)]
     public AnyIPAddress|null $inet;

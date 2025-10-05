@@ -16,7 +16,7 @@ use Doctrine\ORM\Mapping\Table;
 require __DIR__ . '/../../BaseModel.php';
 
 #[Entity, Table(name: 'ip_test')]
-class MariaDbIp extends BaseModel
+final class MariaDbIp extends BaseModel
 {
     #[Column(type: Inet4Type::NAME, nullable: true)]
     public IPv4Address|null $inet4;

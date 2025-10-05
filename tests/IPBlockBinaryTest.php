@@ -24,7 +24,7 @@ use Doctrine\DBAL\Types\Exception\SerializationFailed;
 use Doctrine\DBAL\Types\Exception\ValueNotConvertible;
 use PHPUnit\Framework\TestCase;
 
-class IPBlockBinaryTest extends TestCase
+final class IPBlockBinaryTest extends TestCase
 {
     public function testBindingType(): void
     {
@@ -59,7 +59,7 @@ class IPBlockBinaryTest extends TestCase
                 self::assertEquals(
                     $query[$id],
                     $type->getSQLDeclaration($column, $platform),
-                    $type::class . ' / ' . $platform::class
+                    $type::class . ' / ' . $platform::class,
                 );
             }
         }
@@ -124,7 +124,7 @@ class IPBlockBinaryTest extends TestCase
 
         $this->expectException(ValueNotConvertible::class);
         $this->expectExceptionMessage(
-            'Could not convert database value "0xA23A5EEE" to Doctrine Type "arokettu_ip_cidr_bin".'
+            'Could not convert database value "0xA23A5EEE" to Doctrine Type "arokettu_ip_cidr_bin".',
         );
 
         $block->convertToPHPValue($ipv4bin, $platform);
@@ -138,7 +138,7 @@ class IPBlockBinaryTest extends TestCase
 
         $this->expectException(ValueNotConvertible::class);
         $this->expectExceptionMessage(
-            'Could not convert database value "0x4001E7F90000" to Doctrine Type "arokettu_ipv4_cidr_bin".'
+            'Could not convert database value "0x4001E7F90000" to Doctrine Type "arokettu_ipv4_cidr_bin".',
         );
 
         $block4->convertToPHPValue($ipv6bin, $platform);
@@ -152,7 +152,7 @@ class IPBlockBinaryTest extends TestCase
 
         $this->expectException(ValueNotConvertible::class);
         $this->expectExceptionMessage(
-            'Could not convert database value "0xA23A500014" to Doctrine Type "arokettu_ipv6_cidr_bin".'
+            'Could not convert database value "0xA23A500014" to Doctrine Type "arokettu_ipv6_cidr_bin".',
         );
 
         $block6->convertToPHPValue($ipv4bin, $platform);
@@ -166,7 +166,7 @@ class IPBlockBinaryTest extends TestCase
 
         $this->expectException(ValueNotConvertible::class);
         $this->expectExceptionMessage(
-            'Could not convert database value "0xA23A5000FF" to Doctrine Type "arokettu_ipv4_cidr_bin".'
+            'Could not convert database value "0xA23A5000FF" to Doctrine Type "arokettu_ipv4_cidr_bin".',
         );
 
         $block4->convertToPHPValue($ipv4bin, $platform);
@@ -247,7 +247,7 @@ class IPBlockBinaryTest extends TestCase
         $this->expectExceptionMessage(
             'Could not convert PHP type "Arokettu\IP\IPv6Address" to "arokettu_ip_cidr_bin". ' .
             'An error was triggered by the serialization: ' .
-            'Unsupported type Arokettu\IP\IPv6Address. Expected types: Arokettu\IP\IPv4Block, Arokettu\IP\IPv6Block.'
+            'Unsupported type Arokettu\IP\IPv6Address. Expected types: Arokettu\IP\IPv4Block, Arokettu\IP\IPv6Block.',
         );
 
         $addr->convertToDatabaseValue(IPAddress::fromString('::1'), $platform);
@@ -262,7 +262,7 @@ class IPBlockBinaryTest extends TestCase
         $this->expectExceptionMessage(
             'Could not convert PHP type "Arokettu\IP\IPv6Block" to "arokettu_ipv4_cidr_bin". ' .
             'An error was triggered by the serialization: ' .
-            'Unsupported type Arokettu\IP\IPv6Block. Expected type: Arokettu\IP\IPv4Block.'
+            'Unsupported type Arokettu\IP\IPv6Block. Expected type: Arokettu\IP\IPv4Block.',
         );
 
         $addr->convertToDatabaseValue(IPBlock::fromString('::1/128'), $platform);
@@ -277,7 +277,7 @@ class IPBlockBinaryTest extends TestCase
         $this->expectExceptionMessage(
             'Could not convert PHP type "Arokettu\IP\IPv4Block" to "arokettu_ipv6_cidr_bin". ' .
             'An error was triggered by the serialization: ' .
-            'Unsupported type Arokettu\IP\IPv4Block. Expected type: Arokettu\IP\IPv6Block.'
+            'Unsupported type Arokettu\IP\IPv4Block. Expected type: Arokettu\IP\IPv6Block.',
         );
 
         $addr->convertToDatabaseValue(IPBlock::fromString('127.0.0.1/32'), $platform);

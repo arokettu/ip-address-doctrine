@@ -24,7 +24,7 @@ use Doctrine\DBAL\Types\Exception\SerializationFailed;
 use Doctrine\DBAL\Types\Exception\ValueNotConvertible;
 use PHPUnit\Framework\TestCase;
 
-class IPAddressBinaryTest extends TestCase
+final class IPAddressBinaryTest extends TestCase
 {
     public function testBindingType(): void
     {
@@ -59,7 +59,7 @@ class IPAddressBinaryTest extends TestCase
                 self::assertEquals(
                     $query[$id],
                     $type->getSQLDeclaration($column, $platform),
-                    $type::class . ' / ' . $platform::class
+                    $type::class . ' / ' . $platform::class,
                 );
             }
         }
@@ -124,7 +124,7 @@ class IPAddressBinaryTest extends TestCase
 
         $this->expectException(ValueNotConvertible::class);
         $this->expectExceptionMessage(
-            'Could not convert database value "0xA23A500014" to Doctrine Type "arokettu_ip_bin".'
+            'Could not convert database value "0xA23A500014" to Doctrine Type "arokettu_ip_bin".',
         );
 
         $addr->convertToPHPValue($ipv4bin, $platform);
@@ -138,7 +138,7 @@ class IPAddressBinaryTest extends TestCase
 
         $this->expectException(ValueNotConvertible::class);
         $this->expectExceptionMessage(
-            'Could not convert database value "0x4001E7F900" to Doctrine Type "arokettu_ipv4_bin".'
+            'Could not convert database value "0x4001E7F900" to Doctrine Type "arokettu_ipv4_bin".',
         );
 
         $addr4->convertToPHPValue($ipv6bin, $platform);
@@ -152,7 +152,7 @@ class IPAddressBinaryTest extends TestCase
 
         $this->expectException(ValueNotConvertible::class);
         $this->expectExceptionMessage(
-            'Could not convert database value "0xA23A5EEE" to Doctrine Type "arokettu_ipv6_bin".'
+            'Could not convert database value "0xA23A5EEE" to Doctrine Type "arokettu_ipv6_bin".',
         );
 
         $addr6->convertToPHPValue($ipv4bin, $platform);
@@ -234,7 +234,7 @@ class IPAddressBinaryTest extends TestCase
         $this->expectExceptionMessage(
             'Could not convert PHP type "Arokettu\IP\IPv6Block" to "arokettu_ip_bin". ' .
             'An error was triggered by the serialization: ' .
-            'Unsupported type Arokettu\IP\IPv6Block. Expected types: Arokettu\IP\IPv4Address, Arokettu\IP\IPv6Address.'
+            'Unsupported type Arokettu\IP\IPv6Block. Expected types: Arokettu\IP\IPv4Address, Arokettu\IP\IPv6Address.',
         );
 
         $addr->convertToDatabaseValue(IPBlock::fromString('::1', -1), $platform);
@@ -249,7 +249,7 @@ class IPAddressBinaryTest extends TestCase
         $this->expectExceptionMessage(
             'Could not convert PHP type "Arokettu\IP\IPv6Address" to "arokettu_ipv4_bin". ' .
             'An error was triggered by the serialization: ' .
-            'Unsupported type Arokettu\IP\IPv6Address. Expected type: Arokettu\IP\IPv4Address.'
+            'Unsupported type Arokettu\IP\IPv6Address. Expected type: Arokettu\IP\IPv4Address.',
         );
 
         $addr->convertToDatabaseValue(IPAddress::fromString('::1'), $platform);
@@ -264,7 +264,7 @@ class IPAddressBinaryTest extends TestCase
         $this->expectExceptionMessage(
             'Could not convert PHP type "Arokettu\IP\IPv4Address" to "arokettu_ipv6_bin". ' .
             'An error was triggered by the serialization: ' .
-            'Unsupported type Arokettu\IP\IPv4Address. Expected type: Arokettu\IP\IPv4Address.'
+            'Unsupported type Arokettu\IP\IPv4Address. Expected type: Arokettu\IP\IPv4Address.',
         );
 
         $addr->convertToDatabaseValue(IPAddress::fromString('0.0.0.1'), $platform);

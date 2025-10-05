@@ -11,6 +11,6 @@ use Doctrine\ORM\Mapping\Table;
 require __DIR__ . '/../../BaseModel.php';
 
 #[Entity, Table(name: 'ip_test')]
-class MySqlIP extends BaseModel
+final class MySqlIP extends BaseModel
 {
 }
