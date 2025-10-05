@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @copyright 2024 Anton Smirnov
+ * @license MIT https://spdx.org/licenses/MIT.html
+ */
+
 declare(strict_types=1);
 
 use Arokettu\IP\Doctrine\Demo\MariaDbIp;

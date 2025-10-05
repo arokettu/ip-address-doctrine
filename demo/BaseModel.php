@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @copyright 2024 Anton Smirnov
+ * @license MIT https://spdx.org/licenses/MIT.html
+ */
+
 declare(strict_types=1);
 
 namespace Arokettu\IP\Doctrine\Demo;
@@ -8,6 +13,7 @@ use Arokettu\IP\AnyIPAddress;
 use Arokettu\IP\AnyIPBlock;
 use Arokettu\IP\IPv4Block;
 use Arokettu\IP\IPv6Block;
+// phpcs:ignore SlevomatCodingStandard.Namespaces.DisallowGroupUse.DisallowedGroupUse
 use Arokettu\IP\Doctrine\{
     IPAddressBinaryType, IPAddressType, IPBlockBinaryType, IPBlockType,
     IPv4AddressBinaryType, IPv4AddressType, IPv4BlockBinaryType, IPv4BlockType,
